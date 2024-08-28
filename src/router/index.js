@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const authToken = require("../data/constants");
+const { authToken } = require("../data/constants");
 
 // #region Controllers
 // #endregion Controllers
