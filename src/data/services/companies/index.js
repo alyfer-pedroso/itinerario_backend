@@ -40,7 +40,7 @@ module.exports = {
   create_company: ({ ...data }) => {
     return new Promise((accept, reject) => {
       db.query(
-        "INSET INTO companies (username, password, email, name, city, state, country) VALUES (?, ?, ?, ? ,?, ?, ?)",
+        "INSERT INTO companies (username, password, email, name, city, state, country) VALUES (?, ?, ?, ? ,?, ?, ?)",
         Object.values(data),
         (error, result) => {
           if (error) return reject(error);
