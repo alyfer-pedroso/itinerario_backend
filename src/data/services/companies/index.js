@@ -58,4 +58,13 @@ module.exports = {
       });
     });
   },
+
+  update_company_name: (name, id) => {
+    return new Promise((accept, reject) => {
+      db.query("UPDATE companies SET name = ? WHERE companies.id = ?", [name, id], (error, result) => {
+        if (error) return reject(error);
+        accept(result);
+      });
+    });
+  },
 };

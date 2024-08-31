@@ -26,6 +26,7 @@ router.post("/companies/register", authToken, companies.create_company);
 //#region PATCH
 
 //#region Companies
+router.patch("/companies/update_name", authToken, companies.update_company_name);
 // #endregion Companies
 
 //#endregion PATCH
