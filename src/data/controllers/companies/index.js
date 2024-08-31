@@ -42,13 +42,30 @@ module.exports = {
     try {
       const { id } = req.query;
 
-      if ([null, undefined, ""].includes(id)) return resp.json(new Error("Preencha todos os campos!", "Exclusão inválida!"));
+      if (!id) return resp.json(new Error("Preencha todos os campos!", "Exclusão inválida!"));
 
       const isvalid = await services.find_company_byid(id);
       if (isvalid.length < 1) return resp.json(new Error(`Não foi possível encontrar o ID: ${id}`, "Exclusão inválida!"));
 
       await services.delete_company(id);
       resp.json(new Sucessful({ id }, "Empresa excluída com sucesso!"));
+    } catch (error) {
+      resp.json(new Error(error.message));
+    }
+  },
+
+  update_company_name: async (req, resp) => {
+    try {
+      const { name, id } = req.body;
+      if (!name || !id) {
+        return resp.json(new Error("Preencha todos os campos!", "Atualização inválida!"));
+      }
+
+      const isvalid = await services.find_company_byid(id);
+      if (isvalid.length < 1) return resp.json(new Error(`Não foi possível encontrar o ID: ${id}`, "Atualização inválida!"));
+
+      await services.update_company_name(name, id);
+      resp.json(new Sucessful({ name, id }, "Nome da empresa atualizado com sucesso!"));
     } catch (error) {
       resp.json(new Error(error.message));
     }
