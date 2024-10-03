@@ -1,11 +1,11 @@
-const services = require("../../services/companies");
-const { Sucessful, Error } = require("../../../class");
+const { Companies } = require("../../services");
+const { Successful, Error } = require("../../classes");
 
 module.exports = {
   all_companies: async (_, resp) => {
     try {
-      const companies = await services.all_companies();
-      resp.json(new Sucessful(companies));
+      const companies = await Companies.all_companies();
+      resp.json(new Successful(companies));
     } catch (error) {
       resp.json(new Error(error));
     }
@@ -20,19 +20,19 @@ module.exports = {
         return resp.json(new Error("Preencha todos os campos!", "Cadastro inválido!"));
       }
 
-      const userExist = await services.find_company_byusername(req.body.username);
+      const userExist = await Companies.find_company_byusername(req.body.username);
       if (userExist.length > 0) {
         resp.json(new Error("Esse usuário já está sendo usado.", "Cadastro inválido!"));
         return;
       }
-      const emailExist = await services.find_company_byemail(req.body.email);
+      const emailExist = await Companies.find_company_byemail(req.body.email);
       if (emailExist.length > 0) {
         resp.json(new Error("Esse e-mail já está sendo usado.", "Cadastro inválido!"));
         return;
       }
 
-      await services.create_company(req.body);
-      resp.json(new Sucessful(req.body, "Empresa criada com sucesso!"));
+      await Companies.create_company(req.body);
+      resp.json(new Successful(req.body, "Empresa criada com sucesso!"));
     } catch (error) {
       resp.json(new Error(error.message));
     }
@@ -44,11 +44,11 @@ module.exports = {
 
       if (!id) return resp.json(new Error("Preencha todos os campos!", "Exclusão inválida!"));
 
-      const isvalid = await services.find_company_byid(id);
+      const isvalid = await Companies.find_company_byid(id);
       if (isvalid.length < 1) return resp.json(new Error(`Não foi possível encontrar o ID: ${id}`, "Exclusão inválida!"));
 
-      await services.delete_company(id);
-      resp.json(new Sucessful({ id }, "Empresa excluída com sucesso!"));
+      await Companies.delete_company(id);
+      resp.json(new Successful({ id }, "Empresa excluída com sucesso!"));
     } catch (error) {
       resp.json(new Error(error.message));
     }
@@ -61,11 +61,11 @@ module.exports = {
         return resp.json(new Error("Preencha todos os campos!", "Atualização inválida!"));
       }
 
-      const isvalid = await services.find_company_byid(id);
+      const isvalid = await Companies.find_company_byid(id);
       if (isvalid.length < 1) return resp.json(new Error(`Não foi possível encontrar o ID: ${id}`, "Atualização inválida!"));
 
-      await services.update_company_name(name, id);
-      resp.json(new Sucessful({ name, id }, "Nome da empresa atualizado com sucesso!"));
+      await Companies.update_company_name(name, id);
+      resp.json(new Successful({ name, id }, "Nome da empresa atualizado com sucesso!"));
     } catch (error) {
       resp.json(new Error(error.message));
     }
