@@ -1,4 +1,4 @@
-class Sucessful {
+class Successful {
   constructor(data, message) {
     this.message = message || "Sucesso!";
     this.error = null;
@@ -7,4 +7,4 @@ class Sucessful {
   }
 }
 
-module.exports = Sucessful;
+module.exports = Successful;

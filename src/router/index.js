@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-const { authToken } = require("../data/constants");
+const { AuthJWT } = require("../middlewares");
 
 // #region Controllers
-const companies = require("../data/controllers/companies");
+const { Companies } = require("../data/controllers");
 // #endregion Controllers
 
 //#region GET
 
 //#region Companies
-router.get("/companies/all", authToken, companies.all_companies);
+router.get("/companies/all", AuthJWT, Companies.all_companies);
 //#endregion Companies
 
 //#endregion GET
@@ -18,7 +18,7 @@ router.get("/companies/all", authToken, companies.all_companies);
 //#region POST
 
 //#region Companies
-router.post("/companies/register", authToken, companies.create_company);
+router.post("/companies/register", AuthJWT, Companies.create_company);
 //#endregion Companies
 
 //#endregion POST
@@ -26,7 +26,7 @@ router.post("/companies/register", authToken, companies.create_company);
 //#region PATCH
 
 //#region Companies
-router.patch("/companies/update_name", authToken, companies.update_company_name);
+router.patch("/companies/update_name", AuthJWT, Companies.update_company_name);
 // #endregion Companies
 
 //#endregion PATCH
@@ -34,7 +34,7 @@ router.patch("/companies/update_name", authToken, companies.update_company_name)
 //#region DELETE
 
 //#region Companies
-router.delete("/companies/delete", authToken, companies.delete_company);
+router.delete("/companies/delete", AuthJWT, Companies.delete_company);
 //#endregion Companies
 
 //#endregion DELETE
